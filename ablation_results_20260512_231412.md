@@ -18,19 +18,18 @@ stdout. Each line printed should have a line number added to i
 
 **Code submitted:**
 ```java
-import java.io.File;
-
-public class Answer {
-    public static void main(String[] args) {
-
-        File file = new File("example.txt");
-
-        int lineNumber = 1;
-
-        System.out.println(lineNumber + ": " + file);
-
-        lineNumber++;
-        System.out.println(lineNumber + ": " + file);
+package lab_exercise_2;
+public class lab_exercise_2{
+    public class Main {
+        public static void main(String[] args) {
+            java.io.File f = new java.io.File("file.txt");
+            java.util.Scanner s = new java.util.Scanner(f);
+            int i = 1;
+            while(s.hasNextLine()) {
+                System.out.println(i + s.nextLine());
+                i++;
+            }
+        }
     }
 }
 ```
@@ -42,28 +41,33 @@ The student attempted to open a file, but did not actually read the contents of 
 **Reason:** The student's submission does not meet the requirements of the task. It does not read the file or print its contents, and instead simply outputs the filename and its path with line numbers. The code is also missing the necessary imports for reading from a file.
 
 ### Fine-Tuned Model Feedback
-Summary: The code incorrectly assumes the input is a single `File` object instead of processing a file's contents line by line, leading to hard-coded output for only two lines.
+Summary: The code attempts to print a filename with line numbers, but fundamentally fails to correctly implement reading from a file due to incorrect logic within the loop. It also has significant style issues.
 
-- Correctness: (2 - Poor) Your code compiles but fundamentally fails to solve the problem correctly. It processes only two hardcoded values, completely missing the requirement to read from a file line-by-line and print each with its corresponding line number. This demonstrates a significant misunderstanding of how file reading works in Java.
-- Efficiency: (Not needed)
-- Readability: (3 - Average) The variable names are clear, and indentation is consistent. However, there is no explanation of your logic or intent, making it harder to understand why you chose to process only two specific file properties rather than the actual file content.
-- Error Handling: (1 - Fail) The program does not handle any potential errors. If the file "example.txt" does not exist, the program will crash with a runtime exception. Additionally, it doesn't account for issues like file access permissions or other I/O problems, which would lead to unhandled exceptions.
-- Maintability and Extensibility: (1 - Fail) All the logic resides within the `main` method, and the filename is hardcoded. This makes the code extremely difficult to maintain or extend; if you wanted to process a different file, you'd need to manually modify the source code and recompile. It also violates the Single Responsibility Principle.
-- Adherence to style guides and conventions: (4 - Good) You've followed basic Java naming conventions for classes and variables. Indentation is consistent throughout the code. While not strictly necessary for this small snippet, consider using `try-with-resources` for better resource management when working with file streams.
+- Correctness: (2 - Poor) Your program compiles and runs, but it does not solve the problem of opening and printing a file's contents. Instead, it enters an infinite loop where it continuously processes the `File` object itself, rather than its content. How would you iterate through each line of a file? What is the correct way to access the actual data contained within a `File` object?
+
+- Efficiency: (3 - Average) The current approach of repeatedly printing the same `File` object in a loop is inefficient as it performs redundant operations. However, if your intention was simply to process the file, this naive iteration could be considered "okay" for small files. To truly improve efficiency, consider how to process a file line by line, which inherently involves fewer operations per line processed.
+
+- Readability: (2 - Poor) While basic variable names like `lineNumber` are acceptable, the overall structure of having a nested `Main` class within the `lab_exercise_2` class is confusing and unnecessary. Additionally, comments like "// read the file somehow" indicate a lack of clarity regarding the intended implementation, which hinders understanding.
+
+- Error Handling: (Not needed) This category is not applicable as the core functionality requested—opening and reading a file—is not implemented.
+
+- Maintainability and Extensibility: (2 - Poor) The hardcoding of the file name ("file.txt") makes the program inflexible. If you wanted to change the file or add command-line arguments for flexibility, the current setup would require modification. Also, the nested `Main` class adds unnecessary complexity without providing any benefits.
+
+- Adherence to style guides and conventions: (2 - Poor) Your code deviates significantly from standard Java naming conventions. Class names should be PascalCase (e.g., `LabExercise2`) and method/class names inside classes should follow camelCase (e.g., `main`, `printFileContents`). The nesting of `class Main` within another class is non-standard and unconventional for a simple standalone application.
 
 Final score: 2
 
 Pseudocode scaffolding:
+```
+PROGRAM PrintFileWithLineNumbers
 
-1. Start the program
-2. Define a way to specify where the data lives (e.g., a path or name for a file)
-3. Create a connection to the data (file) using appropriate tools provided by the language/environment
-4. Set up a loop to read the data piece by piece until all data is consumed
-5. For each piece of data (line):
-   a. Increment a counter to keep track of what line number we're on
-   b. Process the data as needed (e.g., print it to the screen, store it, etc.)
-   c. Display the current line number along with the processed data
-6. Close the connection to the data to ensure resources are
+  FUNCTION readAndPrintFile(fileName):
+    ATTEMPT TO OPEN THE FILE:
+      IF successful:
+        SET lineCounter to 1
+        
+        REPEAT UNTIL all lines from file are read
+```
 
 ---
 
